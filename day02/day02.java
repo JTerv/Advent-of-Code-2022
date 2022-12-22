@@ -25,8 +25,14 @@ class day02 {
     static final int paperValue = 2;
     static final int scissorsValue = 3;
 
+    static final char toLoseValue = 'X';
+    static final char toDrawValue = 'Y';
+    static final char toWinValue = 'Z';
+
     static int yourScore = 0;
     static int totalScore = 0;
+
+    static char yourMove = ' ';
 
     static int ComputeTotalScore() {
 
@@ -37,10 +43,12 @@ class day02 {
 
             while (line != null) {
                 System.out.println(line);
-                
-                totalScore += ComputeScore(line.charAt(0), line.charAt(2));
+
+
+                totalScore += ComputeScore(line.charAt(0), ComputeMove(line.charAt(0), line.charAt(2)));
+                yourMove = ' ';
                 yourScore = 0;
-                
+
                 line = reader.readLine();
 
             }
@@ -89,9 +97,43 @@ class day02 {
 
     }
 
+    static char ComputeMove(char move1, char move2) {
+        switch (move1) {
+            case opponentRock:
+                if (move2 == toLoseValue) {
+                    yourMove = yourScissors;
+                } else if (move2 == toDrawValue) {
+                    yourMove = yourRock;
+                } else {
+                    yourMove = yourPaper;
+                }
+                break;
+            case opponentPaper:
+                if (move2 == toLoseValue) {
+                    yourMove = yourRock;
+                } else if (move2 == toDrawValue) {
+                    yourMove = yourPaper;
+                } else {
+                    yourMove = yourScissors;
+                }
+                break;
+            case opponentScissors:
+                if (move2 == toLoseValue) {
+                    yourMove = yourPaper;
+                } else if (move2 == toDrawValue) {
+                    yourMove = yourScissors;
+                } else {
+                    yourMove = yourRock;
+                }
+                break;
+        }
+
+        return yourMove;
+    }
+
     public static void main(String[] args) {
         System.out.println(ComputeTotalScore());
     }
 }
 
-//ATT 1: 17909731
+// ATT 1: 17909731
